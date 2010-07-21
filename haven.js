@@ -134,7 +134,7 @@
             return;
         }
         ent.unlock();
-    }
+    };
 
 }(haven));
 /*global haven document */
@@ -530,7 +530,7 @@
             throw "jQuery must be loaded for haven json support.";
         }
         $.getJSON(ent, function (data) {
-             haven(data, jsonPurposeCallback);
+            haven(data, jsonPurposeCallback);
         });
 	
     };
