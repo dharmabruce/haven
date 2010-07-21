@@ -88,8 +88,6 @@ In this example, the "component" forest depends on "script1.js":
 
 9. **haven("googlevisualization.js");** haven works with third party loaders:
 
-        haven("googlevisualization.js");
-        
     googlevisualization.js:
     
         haven.lock("googlevisualization.js");
