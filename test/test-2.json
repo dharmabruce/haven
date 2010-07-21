@@ -1,0 +1,15 @@
+{
+    "purpose": "forest",
+    "name": "component",
+    "ents": {
+        "test-15.js": [
+            "test-16.js",
+            "test-17.js"
+        ],
+        "test-18.js": [
+            "test-19.js",
+            "test-20.js"
+        ]
+    },
+    "roots": "test-21.js"
+}

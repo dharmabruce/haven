@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <title>Haven test suite 1</title>
+        <link href="../lib/qunit.css" rel="stylesheet" type="text/css" />
+        <script src="../lib/qunit.js"></script>
+        <script src="../lib/jquery-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <h1 id="qunit-header">Haven test suite 1</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <script src="../haven.js"></script>
+        <script>
+        
+            module("Module Haven Javascript Loading Purpose");
+            
+            asyncTest("Simple javascript load", function() {
+                haven("test-1.js", function() {
+                    ok($("script[src='test-1.js']").length === 1,
+                       "test-1.js loaded correctly");
+                    start();
+                });
+            });
+
+            module("Module Haven Css Loading Purpose");
+            
+            asyncTest("Simple css load", function() {
+                haven("test-1.css", function() {
+                    ok($("link[href='test-1.css']").length === 1,
+                       "test-1.css attached correctly");
+                    setTimeout(function () {
+                        ok(($("body").css("border-bottom-width")==="1px"),
+                            "test-1.css style applied correctly");
+                        haven("test-1.css", function() {
+                            ok($("link[href='test-1.css']").length === 1,
+                               "test-1.css only attached once");
+                            start();
+                        });
+                    }, 500);
+                });
+            });
+            
+            module("Module Haven Array Loading Purpose");
+            
+            asyncTest("Simple array load", function() {
+                var array = [
+                    "test-2.js",
+                    "test-3.js",
+                    "test-4.js"
+                ];
+                haven(array, function() {
+                    $.each(array, function (i, v) {
+                        ok($("script[src='" + v + "']").length === 1,
+                        v + " loaded correctly");
+                    });
+                    
+                    ok($("script[src='test-2.js'] ~ " +
+                        "script[src='test-3.js'] ~ " +
+                        "script[src='test-4.js']").length === 1,
+                        "script order correct"
+                    );
+                    
+                    start();
+                });
+            });
+            
+            module("Module Haven Object Loading Purpose");
+            
+            asyncTest("Bare object loading with some dependencies", function() {
+                haven({
+                    "test-7.js": "test-5.js",
+                    "test-6.js": ["test-8.js", "test-7.js"]
+                }, function() {
+                    ok(($("script[src='test-5.js'] ~ " +
+                        "script[src='test-7.js'] ~ " +
+                        "script[src='test-6.js']").length === 1 &&
+                        $("script[src='test-8.js'] ~ " +
+                        "script[src='test-6.js']").length === 1),
+                        "script order correct"
+                     );
+                    start();
+                });
+            });
+            
+            module("Module Haven JSON Loading Purpose");
+            
+            asyncTest("JSON load", function() {
+                haven("test-1.json", function() {
+                    ok(($("script[src='test-10.js'] ~ " +
+                        "script[src='test-9.js']").length === 1 &&
+                        $("script[src='test-11.js'] ~ " +
+                        "script[src='test-9.js']").length === 1 &&
+                        $("script[src='test-12.js'] ~ " +
+                        "script[src='test-9.js']").length === 1),
+                        "script order correct");
+                   start(); 
+                });
+            });
+            
+            module("Module Haven Forest Loading Purpose");
+            
+            asyncTest("Forest load", function() {
+                haven("test-2.json", function() {
+                    ok(($("script[src='test-21.js'] ~ " +
+                        "script[src='test-15.js']").length === 1 &&
+                        $("script[src='test-21.js'] ~ " +
+                        "script[src='test-18.js']").length === 1),
+                        "forest loaded correctly");
+                    start();
+                });
+            });
+            
+        </script>
+    </body>
+</html>

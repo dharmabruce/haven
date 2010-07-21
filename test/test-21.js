@@ -1,0 +1,3 @@
+/*global */
+
+"use strict";

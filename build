@@ -1,0 +1,11 @@
+cd src
+for file in main.js ent.js javascript.js css.js array.js object.js forest.js json.js
+do
+    if [ "$file" != "main.js" ]
+    then
+        grep -v '"use strict";' $file
+    else
+        cat $file
+    fi
+done > ../haven.js
+
