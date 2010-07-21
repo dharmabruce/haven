@@ -102,7 +102,7 @@ to this:
     ./js/puma.json:
     {
         "purpose": "forest",
-        "name": “puma forest”,
+        "name": "puma forest",
         "ents": {
             "./js/puma_core.js": [
                 "./css/puma.css",
