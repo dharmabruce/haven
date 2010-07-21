@@ -101,9 +101,9 @@ to this:
     
     ./js/puma.json:
     {
-        “purpose”: "forest",
-        “name”: “puma forest”,
-        “ents”: {
+        "purpose": "forest",
+        "name": “puma forest”,
+        "ents": {
             "./js/puma_core.js": [
                 "./css/puma.css",
                 "./js/devicepage_graphs.js",
@@ -113,19 +113,19 @@ to this:
                     "./js/ui.router_device_info.js": 
                         "./css/router_device_info.css"
                 },
-                “./js/ui.router_device_graphs.js”,
+                "./js/ui.router_device_graphs.js",
                 {
                     "./js/ui.contacts.js": "./css/contacts.css"
                 }
                 "./js/ui.router_inventory.js",
                 "./js/ui.router_site_info.js",
                 "./js/ui.router_vrf_info.js",
-                “./js/ui.router_interfaces.js",
+                "./js/ui.router_interfaces.js",
                 "./js/ui.switch_device_info.js",
                 "./js/ui.switch_interfaces.js"
             ]
         },
-        “roots”: "/shared/local/core/3.0.0/core.json"
+        "roots": "/shared/local/core/3.0.0/core.json"
     }
     
     /shared/local/core/3.0.0/core.json:
