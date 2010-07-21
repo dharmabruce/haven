@@ -36,6 +36,16 @@ haven works recursively this way, too.
             ]
         }
 
+    json loading uses the jquery $.getJSON call so you need to include it:
+
+        haven({ "scripts.json": "jquery.js"});
+
+    or
+
+        haven("jquery.js", function() {
+            haven("scripts.json");
+        });
+
 8. **haven("component.json");** haven can load json files specifying a forest (package).
 In this example, the "component" forest depends on "script1.js":
 
@@ -56,7 +66,23 @@ In this example, the "component" forest depends on "script1.js":
             "roots": "script1.js"
         }
 
-Forests can also be loaded directly by calling haven with a forest object.
+Forests can also be loaded directly by calling haven with a forest object:
+
+        haven({
+            "purpose": "forest",
+            "name": "component",
+            "ents": {
+                "script4.js": [
+                    "style.css",
+                    "script5.js"
+                ],
+                "script5.js": [
+                    "script2.js",
+                    "script3.js
+                ]
+            },
+            "roots": "script1.js"
+        });
 
 ### Complex Example
 Go from this:
@@ -95,11 +121,13 @@ to this:
     ...
     <script src="./js/haven.js"></script>
     <script>
-    haven("./js/puma.json");
+    haven({"./js/puma.json":
+        "/shared/third-party/jquery/1.4.2/jquery-1.4.2.min.js"});
     </script>
     ...
     
-    ./js/puma.json:
+./js/puma.json:
+
     {
         "purpose": "forest",
         "name": "puma forest",
@@ -128,7 +156,8 @@ to this:
         "roots": "/shared/local/core/3.0.0/core.json"
     }
     
-    /shared/local/core/3.0.0/core.json:
+/shared/local/core/3.0.0/core.json:
+
     {
         "purpose": "forest",
         "name": "core forest",
