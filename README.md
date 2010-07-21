@@ -1,11 +1,13 @@
 # haven
-Javascript dependency management
+web app javascript and css dependency management
 
 ## haven in a nutshell
 
-haven effectively wrangles your web application javascript dependencies.
+Usage:
 
-Uses:
+    haven(ent[, callback]);
+
+Examples:
 
 1. **haven("script.js");** will load jquery.js into your document's html head
 inside a script tag.
@@ -36,7 +38,7 @@ haven works recursively this way, too.
             ]
         }
 
-    json loading uses the jquery $.getJSON call so you need to include it:
+    json loading uses the jquery $.getJSON call so you need to include jquery:
 
         haven({ "scripts.json": "jquery.js"});
 
@@ -66,7 +68,7 @@ In this example, the "component" forest depends on "script1.js":
             "roots": "script1.js"
         }
 
-Forests can also be loaded directly by calling haven with a forest object:
+    Forests can also be loaded directly by calling haven with a forest object:
 
         haven({
             "purpose": "forest",
@@ -82,6 +84,27 @@ Forests can also be loaded directly by calling haven with a forest object:
                 ]
             },
             "roots": "script1.js"
+        });
+
+9. **haven("googlevisualization.js");** haven works with third party loaders:
+
+        haven("googlevisualization.js");
+        
+    googlevisualization.js:
+    
+        haven.lock("googlevisualization.js");
+        function visualizationLoaded() {
+            haven.unlock("googlevisualization.js");
+        }
+        
+        function jsapiLoaded() {
+            google.load('visualization', '1', {'packages': ['corechart'],
+                        'callback': visualizationLoaded});
+        }
+        
+        haven({
+            "purpose": "javascript",
+            "name": "http://www.google.com/jsapi?callback=jsapiLoaded"
         });
 
 ### Complex Example

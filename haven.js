@@ -101,9 +101,7 @@
         
         this.unlock = function () {
             this.locks--;
-            if (this.loaded) {
-                
-            }
+            this.callCallbacks();
         };
         
         this.callCallbacks = function () {
@@ -120,7 +118,23 @@
         
         ents[name] = this;
         return this;
-    };    
+    };
+    
+    haven.lock = function (entName) {
+        var ent = haven.getEnt(entName);
+        if (ent === undefined) {
+            ent = new haven.Ent(entName);
+        }
+        ent.lock();
+    };
+    
+    haven.unlock = function (entName) {
+        var ent = haven.getEnt(entName);
+        if (ent === undefined) {
+            return;
+        }
+        ent.unlock();
+    }
 
 }(haven));
 /*global haven document */
@@ -202,12 +216,16 @@
     }
 
     javascriptPurpose = function (ent, callback) {
-        var newEnt;
+        var newEnt, entName = ent;
         if (!javascriptPurpose.isForEnt(ent)) {
             throw "javascriptPurpose is not for this Ent.  Ent must be a string ending in .js.";
         }
         
-        newEnt = haven.getEnt(ent);
+        if (typeof ent === "object") {
+            entName = ent.name;
+        }
+        
+        newEnt = haven.getEnt(entName);
         if (newEnt !== undefined) {
             newEnt.callbacks.push(callback);
             if (newEnt.loaded) {
@@ -229,15 +247,19 @@
                 loadScript(newEnt, callback);
             }
         } else {
-            newEnt = new haven.Ent(ent, callback);
+            newEnt = new haven.Ent(entName, callback);
             loadScript(newEnt, callback);
         }
 
     };
     
     javascriptPurpose.isForEnt = function (ent) {
-        if (typeof ent === "string" &&
-            /\.js$/.test(ent)) {
+        if ((typeof ent === "object" &&
+            ent.purpose !== undefined &&
+            ent.purpose === "javascript" &&
+            ent.name !== undefined) ||
+            (typeof ent === "string" &&
+            /\.js$/.test(ent))) {
             return true;
         }
         return false;

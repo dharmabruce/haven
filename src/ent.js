@@ -37,9 +37,7 @@
         
         this.unlock = function () {
             this.locks--;
-            if (this.loaded) {
-                
-            }
+            this.callCallbacks();
         };
         
         this.callCallbacks = function () {
@@ -56,6 +54,22 @@
         
         ents[name] = this;
         return this;
-    };    
+    };
+    
+    haven.lock = function (entName) {
+        var ent = haven.getEnt(entName);
+        if (ent === undefined) {
+            ent = new haven.Ent(entName);
+        }
+        ent.lock();
+    };
+    
+    haven.unlock = function (entName) {
+        var ent = haven.getEnt(entName);
+        if (ent === undefined) {
+            return;
+        }
+        ent.unlock();
+    }
 
 }(haven));

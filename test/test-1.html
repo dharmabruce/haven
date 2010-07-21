@@ -83,6 +83,18 @@
                 });
             });
             
+            module("Module Haven Ent Locking");
+
+            asyncTest("third party loading support", function() {
+                haven("test-22.js", function () {
+                    // test-23.js will be loaded by test-22.js by jquery's
+                    // $.getScript.  test-23.js will wait 1 second and set
+                    // global variable test23 to true.
+                    ok(test23, "test-22, 23 lock and unlock worked");
+                    start();
+                });
+            });
+            
             module("Module Haven JSON Loading Purpose");
             
             asyncTest("JSON load", function() {
@@ -107,6 +119,16 @@
                         $("script[src='test-21.js'] ~ " +
                         "script[src='test-18.js']").length === 1),
                         "forest loaded correctly");
+                    start();
+                });
+            });
+            
+            module("Module Google JSAPI test");
+            
+            asyncTest("Google Visualization", function() {
+                haven("googlevisualization.js", function() {
+                    ok(google.visualization !== undefined,
+                       "google visualization loaded");
                     start();
                 });
             });
