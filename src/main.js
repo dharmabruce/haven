@@ -2,7 +2,7 @@
 
 "use strict";
 
-(function () {
+(function (window) {
 
     var haven, purposes = [], purposeLoader, browser;
     
@@ -60,6 +60,6 @@
         "object": purposeLoader
     });
     
-    this.haven = haven;
+    window.haven = haven;
 
-}());
+}(window));

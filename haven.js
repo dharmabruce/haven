@@ -2,7 +2,7 @@
 
 "use strict";
 
-(function () {
+(function (window) {
 
     var haven, purposes = [], purposeLoader, browser;
     
@@ -60,9 +60,9 @@
         "object": purposeLoader
     });
     
-    this.haven = haven;
+    window.haven = haven;
 
-}());
+}(window));
 /*global haven */
 
 
@@ -134,7 +134,7 @@
             return;
         }
         ent.unlock();
-    };
+    }
 
 }(haven));
 /*global haven document */
@@ -530,7 +530,7 @@
             throw "jQuery must be loaded for haven json support.";
         }
         $.getJSON(ent, function (data) {
-            haven(data, jsonPurposeCallback);
+             haven(data, jsonPurposeCallback);
         });
 	
     };
